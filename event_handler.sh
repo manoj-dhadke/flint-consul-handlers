@@ -119,16 +119,16 @@ else
          GetAgentHostname
          GetLeaderHostname
          echo "now, going to trigger flintbit..."
-         #IsLeader
-         #if [ $? -eq 0 ]; then
+         IsLeader
+         if [ $? -eq 0 ]; then
            #statements
            echo "triggering flintbit: $FLINTBIT"
            flint_URL="$FLINT_HOSTNAME""$URL_trigger_flintbit""$FLINTBIT""/sync"
            flintbitresponse=`curl -sS -X POST -H "x-flint-username:$FLINT_USERNAME" -H "x-flint-password:$FLINT_PASSWORD" -H "$HEADER_content_type" -H "$HEADER_cache_control" -d '{"my_message":"Flint"}' "$flint_URL"`
            echo "flint response: `echo $flintbitresponse | jq '.'`"
-        #else
-          #echo "Error: Access denied!! agent: $agent_Hostname is not a leader."
-        #fi;
+        else
+          echo "Error: Access denied!! agent: $agent_Hostname is not a leader."
+        fi;
        else
          echo "Error: flint configuration parameters are invalid!!"
          exit 1
